@@ -6,11 +6,11 @@ interface car{
 export const useCarsStore = defineStore('cars', {
     state: () =>  ({cars: [] as car[]}),
     getters: {
-        getCars: (state) => state
+        getCars: (state) => state.cars
     },
     actions: {
         addCar(car: car){
-            let newCar = {
+            const newCar = {
                 id: car.id,
                 name: car.name
             }

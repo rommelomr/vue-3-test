@@ -15,15 +15,20 @@
         <li v-for="(car,i) in cars" :key="'car' + i">
           <span>{{car.name}}</span>
           <button @click="deleteCar(i)">Delete</button>
+          <button @click="storeCar(i)">Store</button>
         </li>
       </ul>
+    </div>
+    <div>
+      <button @click="seeStoredCars()">See stored cars</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import {ref, reactive, computed, watch} from 'vue';
-
+  import { useCarsStore } from '@/stores/cars'
+  
   let newCarName = ref('');
 
 
@@ -68,6 +73,20 @@
   const carsCount = computed(() => {
     return cars.value.length;
   });
+
+  const seeStoredCars = () => {
+
+    const carsStore = useCarsStore();
+    console.log(carsStore.getCars);
+  };
+  const storeCar = (i: number) => {
+
+    const carsStore = useCarsStore();
+    carsStore.addCar({
+      id: Date.now(),
+      name: cars.value[i].name
+    });
+  };
 
   watch(data,(d)=>{
     console.log(d);
